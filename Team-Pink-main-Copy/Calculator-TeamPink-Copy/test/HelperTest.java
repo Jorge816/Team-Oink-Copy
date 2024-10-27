@@ -182,4 +182,111 @@ public void testCalcMonthlyPaymentInterestRateExceedsMax() {
     assertEquals(expResult, result, 0.1);
 }
 
+@Test
+    public void testCalcAutoLoanValidInputs() {
+        System.out.println("calcAutoLoan - valid inputs");
+        String autoPriceStr = "50000";
+        String loanTermStr = "60";
+        String interestRateStr = "7";
+        String cashIncentivesStr = "0";
+        String downPaymentStr = "10000";
+        String tradeInValueStr = "0";
+        String amtOwnedTradeInStr = "0";
+        String salesTaxStr = "7";
+        String otherFeesStr = "2700";
+
+        double[] expected = {792.05, 914.82}; // Expected values for payment without and with fees
+        double[] result = Helper.calcAutoLoan(autoPriceStr, loanTermStr, interestRateStr, cashIncentivesStr, downPaymentStr, tradeInValueStr, amtOwnedTradeInStr, salesTaxStr, otherFeesStr);
+
+        assertArrayEquals(expected, result, 0.01);
+    }
+
+    /**
+     * Test of calcAutoLoan method with zero auto price.
+     */
+    @Test
+    public void testCalcAutoLoanZeroAutoPrice() {
+        System.out.println("calcAutoLoan - zero auto price");
+        String autoPriceStr = "0";
+        String loanTermStr = "60";
+        String interestRateStr = "5";
+        String cashIncentivesStr = "0";
+        String downPaymentStr = "1000";
+        String tradeInValueStr = "0";
+        String amtOwnedTradeInStr = "0";
+        String salesTaxStr = "5";
+        String otherFeesStr = "100";
+
+        double[] expected = {-1, -1}; // Expecting validation failure
+        double[] result = Helper.calcAutoLoan(autoPriceStr, loanTermStr, interestRateStr, cashIncentivesStr, downPaymentStr, tradeInValueStr, amtOwnedTradeInStr, salesTaxStr, otherFeesStr);
+
+        assertArrayEquals(expected, result, 0.01);
+    }
+
+    /**
+     * Test of calcAutoLoan method with negative values for down payment.
+     */
+    @Test
+    public void testCalcAutoLoanNegativeDownPayment() {
+        System.out.println("calcAutoLoan - negative down payment");
+        String autoPriceStr = "30000";
+        String loanTermStr = "36";
+        String interestRateStr = "4";
+        String cashIncentivesStr = "1000";
+        String downPaymentStr = "-5000"; // Invalid negative down payment
+        String tradeInValueStr = "5000";
+        String amtOwnedTradeInStr = "0";
+        String salesTaxStr = "8";
+        String otherFeesStr = "500";
+
+        double[] expected = {-1, -1}; // Expecting validation failure
+        double[] result = Helper.calcAutoLoan(autoPriceStr, loanTermStr, interestRateStr, cashIncentivesStr, downPaymentStr, tradeInValueStr, amtOwnedTradeInStr, salesTaxStr, otherFeesStr);
+
+        assertArrayEquals(expected, result, 0.01);
+    }
+
+    /**
+     * Test of calcAutoLoan method with invalid (non-numeric) input values.
+     */
+    @Test
+    public void testCalcAutoLoanNonNumericInput() {
+        System.out.println("calcAutoLoan - non-numeric input values");
+        String autoPriceStr = "abc";
+        String loanTermStr = "60";
+        String interestRateStr = "4";
+        String cashIncentivesStr = "500";
+        String downPaymentStr = "2000";
+        String tradeInValueStr = "3000";
+        String amtOwnedTradeInStr = "0";
+        String salesTaxStr = "7";
+        String otherFeesStr = "300";
+
+        double[] expected = {-1, -1}; // Expecting validation failure
+        double[] result = Helper.calcAutoLoan(autoPriceStr, loanTermStr, interestRateStr, cashIncentivesStr, downPaymentStr, tradeInValueStr, amtOwnedTradeInStr, salesTaxStr, otherFeesStr);
+
+        assertArrayEquals(expected, result, 0.01);
+    }
+
+    /**
+     * Test of calcAutoLoan method with inputs that exceed maximum limit.
+     */
+    @Test
+    public void testCalcAutoLoanExceedsMaxValue() {
+        System.out.println("calcAutoLoan - inputs exceeding max value");
+        String autoPriceStr = "1000000000"; // Exceeds max limit
+        String loanTermStr = "60";
+        String interestRateStr = "4";
+        String cashIncentivesStr = "500";
+        String downPaymentStr = "2000";
+        String tradeInValueStr = "3000";
+        String amtOwnedTradeInStr = "0";
+        String salesTaxStr = "7";
+        String otherFeesStr = "300";
+
+        double[] expected = {-1, -1}; // Expecting validation failure
+        double[] result = Helper.calcAutoLoan(autoPriceStr, loanTermStr, interestRateStr, cashIncentivesStr, downPaymentStr, tradeInValueStr, amtOwnedTradeInStr, salesTaxStr, otherFeesStr);
+
+        assertArrayEquals(expected, result, 0.01);
+    }
+
 }
