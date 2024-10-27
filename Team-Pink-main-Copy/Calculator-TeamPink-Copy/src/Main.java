@@ -3157,6 +3157,11 @@ String aboutMessage = "<html>"
         });
 
         ALClearButton.setText("Clear");
+        ALClearButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ALClearButtonActionPerformed(evt);
+            }
+        });
 
         jLabel145.setText("Loan Term");
 
@@ -4297,6 +4302,23 @@ String aboutMessage = "<html>"
             ALResultOutput.setText(resultFormat.format(result[0]));
         }
     }//GEN-LAST:event_ALCalcButtonActionPerformed
+
+    private void ALClearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ALClearButtonActionPerformed
+        // TODO add your handling code here:
+        // Clear all input fields
+        ALPriceInput.setText("");
+        ALLoanTermInput.setText("");
+        ALInterestRateInput.setText("");
+        ALCashIncentivesInput.setText("");
+        ALDownPaymentInput.setText("");
+        ALTradeInValueInput.setText("");
+        ALAmtOwnInput.setText("");
+        ALSalesTaxInput.setText("");
+        ALOtherFeesInput.setText("");
+
+        // Clear the output field
+        ALResultOutput.setText("");
+    }//GEN-LAST:event_ALClearButtonActionPerformed
     
     
     
